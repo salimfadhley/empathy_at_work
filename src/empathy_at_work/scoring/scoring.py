@@ -1,4 +1,4 @@
-ALL_QUESTIONS =list(filter(lambda line: line.strip(), """
+ALL_QUESTIONS =list(map(lambda x:x.strip(), filter(lambda line: line.strip(), """
 Facts always come above feelings when giving feedback.
 I find I am most productive at work in the morning.
 People often tell me I am blunt.
@@ -36,17 +36,17 @@ Work is not a place to show emotions.
 I try to put my colleagues needs before my own.
 I enjoy talking about my home life at work.
 I prefer working individually than collaborating as a team.
-It’s more important to get individual recognition than team recognition at work.
-""".splitlines()))
+Its more important to get individual recognition than team recognition at work.
+""".splitlines())))
 
 POSITIVE_SCORING_SCHEME = {
     "definitely agree":2,
-    "slightly agree":1
+    "agree":1
 }
 
 NEGATIVE_SCORING_SCHEME = {
     "definitely disagree":2,
-    "slightly disagree":1
+    "disagree":1
 }
 
 
@@ -65,6 +65,13 @@ class Scorer(object):
 
     def __init__(self, strategy):
         self.strategy = strategy
+
+    def score_row(self, row):
+        score = 0
+        for column_name, scoring_scheme in self.strategy.items():
+            row_value = row[column_name]
+            score += scoring_scheme.get(row_value, 0)
+        return score
 
 EQ_SCORER = Scorer.build_scorer_from_uncompiled_strategy([
     (set([4, 9, 12, 17, 22, 30, 32, 35]), POSITIVE_SCORING_SCHEME),

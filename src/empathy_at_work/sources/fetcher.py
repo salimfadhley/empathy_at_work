@@ -11,5 +11,5 @@ def loader(url):
 def fetcher(url=CSV_SOURCE):
     reader = csv.DictReader(loader(url))
     for row in reader:
-        yield row
+        yield {k.strip(): v.strip().lower() for (k, v) in row.items()}
 
