@@ -1,5 +1,5 @@
 import unittest
-from empathy_at_work.source.fetcher import fetcher
+from empathy_at_work.sources.fetcher import fetcher
 
 
 class TestFetcher(unittest.TestCase):
